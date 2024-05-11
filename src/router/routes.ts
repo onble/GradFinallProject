@@ -50,16 +50,49 @@ export const constantRoute = [
         name: 'Screen',
         meta: {
             hidden: false,
-            title: '数据大屏',
+            title: '数据分析',
             icon: 'Platform',
         },
+    },
+    {
+        path: '/test',
+        component: () => import('@/layout/index.vue'),
+        name: 'Test',
+        meta: {
+            title: '练习',
+            icon: 'Aim',
+        },
+        redirect: '/test/fourTest',
+        children: [
+            {
+                path: '/test/fourTest',
+                component: () => import('@/views/TestView/fourTest/index.vue'),
+                name: 'FourTest',
+                meta: {
+                    title: '基础测试',
+                    hidden: false,
+                    icon: 'Discount',
+                },
+            },
+            {
+                path: '/test/classificationTest',
+                component: () =>
+                    import('@/views/TestView/ClassificationTest/index.vue'),
+                name: 'ClassificationTest',
+                meta: {
+                    title: '分类测试',
+                    hidden: false,
+                    icon: 'Operation',
+                },
+            },
+        ],
     },
     {
         path: '/acl',
         component: () => import('@/layout/index.vue'),
         name: 'Acl',
         meta: {
-            title: '权限管理',
+            title: '训练记录',
             hidden: false,
             icon: 'Lock',
         },
@@ -102,7 +135,7 @@ export const constantRoute = [
         component: () => import('@/layout/index.vue'),
         name: 'Product',
         meta: {
-            title: '商品管理',
+            title: '相关知识',
             icon: 'Goods',
             hidden: false,
         },
@@ -145,6 +178,16 @@ export const constantRoute = [
                 },
             },
         ],
+    },
+    {
+        path: '/xunzhan',
+        component: () => import('@/views/screen/index.vue'),
+        name: 'XunZhang',
+        meta: {
+            hidden: false,
+            title: '勋章墙',
+            icon: 'Platform',
+        },
     },
     {
         path: '/:pathMatch(.*)*',

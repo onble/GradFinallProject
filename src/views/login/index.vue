@@ -11,7 +11,7 @@
                         ref="loginForms"
                     >
                         <h1>Hello</h1>
-                        <h2>欢迎来到硅谷甄选</h2>
+                        <h2>欢迎来到脸盲识别训练网站</h2>
                         <el-form-item prop="username">
                             <el-input
                                 :prefix-icon="User"
@@ -148,7 +148,7 @@ const rules = {
 .login_container {
     width: 100%;
     height: 100vh;
-    background: url('@/assets/images/background.jpg') no-repeat;
+    background: url('@/assets/images/background.webp') no-repeat;
     background-size: cover;
 
     .login_form {
