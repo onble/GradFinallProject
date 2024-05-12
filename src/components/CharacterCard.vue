@@ -54,7 +54,6 @@ function chooseAnswer() {
 }
 function enlargedImage() {
     showDialog.value = true;
-    console.log(111);
 }
 watch(
     () => props.done,

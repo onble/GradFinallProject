@@ -27,99 +27,135 @@
             <section>
                 <div class="items">
                     <BlankCharacterCardWithAnswer
+                        @answer="handleAnswer"
                         v-for="(item, $index) in classification_data.tests"
                         :key="$index"
                         class="item"
                         :character="item"
+                        :done="done"
                     ></BlankCharacterCardWithAnswer>
                 </div>
             </section>
+            <div class="subButton">
+                <el-button
+                    :disabled="countAnswer != TestNumber"
+                    type="primary"
+                    size="default"
+                    @click="nextTest"
+                >
+                    下一组题目
+                </el-button>
+            </div>
         </main>
     </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-// import generateDatas from '@/utils/generateData';
 import BlankCharacterCard from '@/views/TestView/ClassificationTest/BlankCharacterCard.vue';
 import BlankCharacterCardWithAnswer from '@/views/TestView/ClassificationTest/BlankCharacterCardWithAnswer.vue';
 // const data = generateDatas(20);
-const classification_data = ref({
-    A: {
-        id: 1,
-        image: 'public/face/范冰冰/6.jpg',
-        name: '范冰冰',
-    },
-    B: {
-        id: 1,
-        image: 'public/face/Angelagbaby/6.jpg',
-        name: 'Angelagbaby',
-    },
-    tests: [
-        {
-            id: 1,
-            image: 'public/face/Angelagbaby/7.jpg',
-            name: 'Angelagbaby',
-            answer: 'B',
-        },
-        {
-            id: 1,
-            image: 'public/face/范冰冰/1.jpg',
-            name: '范冰冰',
-            answer: 'A',
-        },
-        {
-            id: 1,
-            image: 'public/face/范冰冰/2.jpg',
-            name: '范冰冰',
-            answer: 'A',
-        },
-        {
-            id: 1,
-            image: 'public/face/Angelagbaby/2.jpg',
-            name: 'Angelagbaby',
-            answer: 'B',
-        },
-        {
-            id: 1,
-            image: 'public/face/Angelagbaby/8.jpg',
-            name: 'Angelagbaby',
-            answer: 'B',
-        },
-        {
-            id: 1,
-            image: 'public/face/Angelagbaby/4.jpg',
-            name: 'Angelagbaby',
-            answer: 'B',
-        },
-        {
-            id: 1,
-            image: 'public/face/范冰冰/4.jpg',
-            name: '范冰冰',
-            answer: 'A',
-        },
-        {
-            id: 1,
-            image: 'public/face/范冰冰/9.jpg',
-            name: '范冰冰',
-            answer: 'A',
-        },
-        {
-            id: 1,
-            image: 'public/face/Angelagbaby/1.jpg',
-            name: 'Angelagbaby',
-            answer: 'B',
-        },
-        {
-            id: 1,
-            image: 'public/face/范冰冰/3.jpg',
-            name: '范冰冰',
-            answer: 'A',
-        },
-    ],
-});
+import getData from '@/utils/generateData_fourTest';
+let classification_data = ref(getData());
+// 题组是否完成
+let done = ref(false);
+// 每页题目的数量
+const TestNumber = 10;
+// 记录答题个数
+let countAnswer = ref(0);
+// 记录正确的答题个数
+let countAnswerRight = ref(0);
+// let classification_data = ref({
+//     A: {
+//         id: 1,
+//         image: 'public/face/范冰冰/6.jpg',
+//         name: '范冰冰',
+//     },
+//     B: {
+//         id: 1,
+//         image: 'public/face/Angelagbaby/6.jpg',
+//         name: 'Angelagbaby',
+//     },
+//     tests: [
+//         {
+//             id: 1,
+//             image: 'public/face/Angelagbaby/7.jpg',
+//             name: 'Angelagbaby',
+//             answer: 'B',
+//         },
+//         {
+//             id: 1,
+//             image: 'public/face/范冰冰/1.jpg',
+//             name: '范冰冰',
+//             answer: 'A',
+//         },
+//         {
+//             id: 1,
+//             image: 'public/face/范冰冰/2.jpg',
+//             name: '范冰冰',
+//             answer: 'A',
+//         },
+//         {
+//             id: 1,
+//             image: 'public/face/Angelagbaby/2.jpg',
+//             name: 'Angelagbaby',
+//             answer: 'B',
+//         },
+//         {
+//             id: 1,
+//             image: 'public/face/Angelagbaby/8.jpg',
+//             name: 'Angelagbaby',
+//             answer: 'B',
+//         },
+//         {
+//             id: 1,
+//             image: 'public/face/Angelagbaby/4.jpg',
+//             name: 'Angelagbaby',
+//             answer: 'B',
+//         },
+//         {
+//             id: 1,
+//             image: 'public/face/范冰冰/4.jpg',
+//             name: '范冰冰',
+//             answer: 'A',
+//         },
+//         {
+//             id: 1,
+//             image: 'public/face/范冰冰/9.jpg',
+//             name: '范冰冰',
+//             answer: 'A',
+//         },
+//         {
+//             id: 1,
+//             image: 'public/face/Angelagbaby/1.jpg',
+//             name: 'Angelagbaby',
+//             answer: 'B',
+//         },
+//         {
+//             id: 1,
+//             image: 'public/face/范冰冰/3.jpg',
+//             name: '范冰冰',
+//             answer: 'A',
+//         },
+//     ],
+// });
 // let data_index = ref(0);
 // const characters = ref(data[data_index.value]);
+function handleAnswer(reslut: boolean) {
+    if (reslut) {
+        countAnswerRight.value = countAnswerRight.value + 1;
+    }
+    countAnswer.value = countAnswer.value + 1;
+}
+// 获取下一组题目
+function nextTest() {
+    done.value = !done.value;
+    // 更新数据
+    classification_data.value = getData();
+    // 更新记录
+    countAnswer.value = 0;
+    countAnswerRight.value = 0;
+}
 </script>
 
 <style lang="scss" scoped>
@@ -200,6 +236,15 @@ main {
                 flex: 1; /* 确保每个组件占据相等空间 */
             }
         }
+    }
+
+    // 提交按钮
+    .subButton {
+        position: fixed; // 固定定位
+        bottom: 5%; // 居中显示，与视口顶部的距离
+        left: 60%; // 居中显示，与视口左侧的距离
+        transform: translate(-50%, -50%); // 精确居中定位
+        z-index: 1000;
     }
 }
 </style>

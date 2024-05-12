@@ -85,6 +85,16 @@ export const constantRoute = [
                     icon: 'Operation',
                 },
             },
+            {
+                path: '/test/findTest',
+                component: () => import('@/views/TestView/findTest/index.vue'),
+                name: 'FindTest',
+                meta: {
+                    title: '搜寻测试',
+                    hidden: false,
+                    icon: 'ZoomIn',
+                },
+            },
         ],
     },
     {
@@ -94,7 +104,7 @@ export const constantRoute = [
         meta: {
             title: '训练记录',
             hidden: false,
-            icon: 'Lock',
+            icon: 'Histogram',
         },
         redirect: '/acl/user',
         children: [
@@ -131,50 +141,54 @@ export const constantRoute = [
         ],
     },
     {
-        path: '/product',
+        path: '/hub',
         component: () => import('@/layout/index.vue'),
-        name: 'Product',
+        name: 'Hub',
         meta: {
             title: '相关知识',
-            icon: 'Goods',
             hidden: false,
+            icon: 'Management',
         },
-        redirect: '/product/trademark',
+        redirect: '/hub/overview',
         children: [
             {
-                path: '/product/trademark',
-                component: () => import('@/views/product/trademark/index.vue'),
-                name: 'Trademark',
+                path: '/hub/overview',
+                component: () => import('@/views/Hub/Overview/index.vue'),
+                name: 'Overview',
                 meta: {
-                    title: '品牌管理',
-                    icon: 'ShoppingCartFull',
+                    title: '脸盲症概述',
+                    hidden: false,
+                    icon: 'InfoFilled',
                 },
             },
             {
-                path: '/product/attr',
-                component: () => import('@/views/product/attr/index.vue'),
-                name: 'Attr',
+                path: '/hub/diagnosis',
+                component: () => import('@/views/Hub/Diagnosis/index.vue'),
+                name: 'Diagnosis',
                 meta: {
-                    title: '属性管理',
-                    icon: 'ChromeFilled',
+                    title: '诊断与症状',
+                    hidden: false,
+                    icon: 'Odometer',
                 },
             },
             {
-                path: '/product/spu',
-                component: () => import('@/views/product/spu/index.vue'),
-                name: 'Spu',
+                path: '/hub/treatment',
+                component: () => import('@/views/Hub/Treatment/index.vue'),
+                name: 'Treatment',
                 meta: {
-                    title: 'SPU管理',
-                    icon: 'Calendar',
+                    title: '治疗方法',
+                    hidden: false,
+                    icon: 'Checked',
                 },
             },
             {
-                path: '/product/sku',
-                component: () => import('@/views/product/sku/index.vue'),
-                name: 'Sku',
+                path: '/hub/resources',
+                component: () => import('@/views/Hub/Resources/index.vue'),
+                name: 'Resources',
                 meta: {
-                    title: 'SKU管理',
-                    icon: 'Orange',
+                    title: '资源与支持',
+                    hidden: false,
+                    icon: 'Guide',
                 },
             },
         ],
@@ -186,7 +200,7 @@ export const constantRoute = [
         meta: {
             hidden: false,
             title: '勋章墙',
-            icon: 'Platform',
+            icon: 'GoldMedal',
         },
     },
     {

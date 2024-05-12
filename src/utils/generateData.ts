@@ -82,11 +82,4 @@ function shuffle(array) {
     }
 }
 
-function main() {
-    const data = generateDatas(30);
-    const jsonData = JSON.stringify(data, null, 4);
-    console.log(jsonData);
-}
-
-main();
 export default generateDatas;
