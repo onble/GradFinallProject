@@ -12,6 +12,17 @@ export const constantRoute = [
         },
     },
     {
+        // 用户登录
+        path: '/user_login',
+        component: () => import('@/views/userLogin/index.vue'),
+        name: 'userLogin', // 命名路由
+        meta: {
+            title: '用户登录', // 菜单路由
+            hidden: true, // 代表路由标题再菜单中是否隐藏 true：隐藏 false：不隐藏
+            icon: 'Promotion', // 菜单文字左侧的图标，支持element-plus全部图标
+        },
+    },
+    {
         // 登录成功以后展示数据的路由
         path: '/',
         component: () => import('@/layout/index.vue'),
