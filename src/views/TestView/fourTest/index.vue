@@ -28,7 +28,7 @@
                     type="primary"
                     size="large"
                     @click="previousTest"
-                    :disabled="data_index <= 0"
+                    :disabled="data_index <= 0 || isDisabled"
                 >
                     <el-icon>
                         <ArrowLeft />
@@ -114,7 +114,7 @@ function previousTest() {
         background-color: rgb(235, 245, 255);
         border-radius: 8px;
         border-left: 5px solid rgb(64, 158, 255);
-        margin: 20px 0;
+        margin: 10px 0;
         /* 定义渐变背景颜色 */
         .text-highlight {
             font-size: 25px;
