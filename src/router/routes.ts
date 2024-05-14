@@ -206,7 +206,7 @@ export const constantRoute = [
     },
     {
         path: '/xunzhan',
-        component: () => import('@/views/screen/index.vue'),
+        component: () => import('@/views/modalWall/index.vue'),
         name: 'XunZhang',
         meta: {
             hidden: false,

@@ -24,7 +24,8 @@ export default {
     height: 100%;
     display: flex;
     justify-content: space-between;
-    background-image: linear-gradient(to right, #e2e1e4, #ccccd6, #ccccd6);
+    background: url('/public/source/通配背景图.jpg') no-repeat center center;
+    background-size: cover;
     .tabbar_left {
         display: flex;
         align-items: center;

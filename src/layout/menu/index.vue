@@ -73,4 +73,17 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+div {
+    background: $base-menu-background;
+}
+.el-menu-item.is-active {
+    color: #66c18c;
+}
+.el-sub-menu__title:hover {
+    background-color: #1a3b32;
+}
+.el-menu-item:hover {
+    background-color: #314a43;
+}
+</style>

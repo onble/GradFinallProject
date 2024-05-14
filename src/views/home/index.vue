@@ -11,13 +11,14 @@
         </ul>
 
         <h2>用户评价</h2>
-        <p>
+        <blockquote>
             "使用这个平台让我在社交场合更加自信，能够快速记住新朋友的面孔。" -
             李明
-        </p>
+        </blockquote>
 
         <div class="call-to-action">
             <p>立即注册，开始你的人脸辨识训练之旅！</p>
+            <el-button type="primary" size="large">立即注册</el-button>
         </div>
     </div>
     <div class="footer">
@@ -27,48 +28,100 @@
 
 <script setup lang="ts"></script>
 
-<style scoped>
+<style scoped lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 .content {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f9f9f9;
     color: #333;
-    padding: 20px;
+    padding: 40px 20px;
     text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    background: linear-gradient(to bottom right, #ffffff, #e3f2fd);
 }
-.content h1,
-.content h2 {
-    color: #333;
-    font-size: 2rem;
+
+h1 {
+    color: #007bbd;
+    font-size: 3rem;
+    margin-bottom: 20px;
+    font-weight: bold;
 }
-.content p,
-.content li {
+
+h2 {
+    color: #007bbd;
+    font-size: 2.5rem;
+    margin: 40px 0 20px;
+    font-weight: bold;
+}
+
+p {
     color: #666;
-    font-size: 1.2rem;
-    margin: 10px 0;
+    font-size: 1.4rem;
+    margin: 20px 0;
 }
+
 .feature-list {
     list-style: none;
     padding: 0;
+    font-size: 1.4rem;
+    line-height: 2;
 }
+
 .feature-list li {
-    margin-bottom: 5px;
+    margin-bottom: 15px;
+    padding-left: 25px;
+    position: relative;
+    text-align: left;
+    color: #333;
 }
+
+.feature-list li::before {
+    content: '✔️';
+    color: #007bbd;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+blockquote {
+    font-size: 1.6rem;
+    font-style: italic;
+    color: #555;
+    border-left: 5px solid #007bbd;
+    padding-left: 15px;
+    margin: 30px auto;
+    max-width: 800px;
+    background-color: #e3f2fd;
+    border-radius: 5px;
+    padding: 15px 20px;
+}
+
+.call-to-action {
+    background: linear-gradient(to right, #e0f7fa, #b2ebf2);
+    color: #fff;
+    padding: 30px 20px;
+    margin-top: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 40px auto;
+}
+
+.call-to-action p {
+    font-size: 1.6rem;
+    margin: 20px 0;
+}
+
 .footer {
     text-align: center;
-    padding: 10px 0;
-    background: #333;
+    padding: 20px 0;
+    background: linear-gradient(to right, #e0f7fa, #b2ebf2);
     color: #fff;
-}
-.call-to-action {
-    background-color: #007bbd;
-    color: #fff;
-    padding: 20px;
-    margin-top: 20px;
-}
-.call-to-action p {
-    font-size: 1.4rem;
-    margin: 10px 0;
+    margin-top: 30px;
+    border-radius: 10px;
 }
 </style>

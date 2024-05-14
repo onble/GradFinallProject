@@ -4,7 +4,7 @@
 // 左侧的菜单的宽度
 $base-menu-width: 260px;
 // 左侧菜单的背景颜色
-$base-menu-background: #001529;
+$base-menu-background: #808f7c;
 $base-menu-min-width: 50px;
 
 // 顶部导航的高度
@@ -15,3 +15,11 @@ $base-menu-logo-height: 50px;
 
 // 左侧菜单logo右侧文字大小
 $base-logo-title-fontSize: 20px;
+// 主要视口的背景设置
+$base-mian-background: linear-gradient(
+        140deg,
+        rgba(32, 54, 226, 0.93),
+        rgba(21, 244, 147, 0.521),
+        rgba(231, 42, 225, 0.115)
+    ),
+    linear-gradient(72deg, transparent, rgba(230, 107, 115, 0.532));
