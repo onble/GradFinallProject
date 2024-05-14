@@ -9,6 +9,8 @@ import type {
 enum API {
     user_login_URL = '/login_user',
     user_register_URL = '/user/register',
+    user_info_URL = '/user/info',
+    user_logout_URL = '/user/logout',
     LOGIN_URL = '/admin/acl/index/login',
     USERINFO_URL = '/admin/acl/index/info',
     LOGOUT_URL = '/admin/acl/index/logout',
@@ -35,3 +37,5 @@ export const userRegister = (data) =>
         API.user_register_URL +
             `?account=${data.username}&password=${data.password}&repassword=${data.repassword}&invitation_code=${data.invitation_code}`,
     );
+export const user_info = () => request.get(API.user_info_URL);
+export const user_logout = () => request.post<any, any>(API.user_logout_URL);

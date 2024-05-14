@@ -24,7 +24,7 @@ router.beforeEach(async (to: any, from: any, next: any) => {
     // 用户登录判断
     if (token) {
         // 登录成功，访问login,不能访问，指向首页
-        if (to.path == '/login') {
+        if (to.path == '/user_login') {
             next({ path: '/' });
         } else {
             // 登录成功访问其余六个路由（登录排除）
@@ -43,16 +43,16 @@ router.beforeEach(async (to: any, from: any, next: any) => {
                     // 用户手动修改本地存储token
                     // 退出登录->用户相关的数据清空
                     await userStore.userLogout();
-                    next({ path: '/login', query: { redirect: to.path } });
+                    next({ path: '/user_login', query: { redirect: to.path } });
                 }
             }
         }
     } else {
         // 用户未登录判断
-        if (to.path == '/login') {
+        if (to.path == '/user_login') {
             next();
         } else {
-            next({ path: '/login', query: { redirect: to.path } });
+            next({ path: '/user_login', query: { redirect: to.path } });
         }
     }
 });

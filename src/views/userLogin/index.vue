@@ -72,7 +72,7 @@
                             <div
                                 class="inf"
                                 id="invitation_code"
-                                ref="invitation_code"
+                                ref="wrong_invitation_code"
                             >
                                 <i
                                     class="fa fa-exclamation-triangle"
@@ -200,7 +200,6 @@ import useUserStore from '@/store/modules/user';
 import { useRouter, useRoute } from 'vue-router';
 // 引入获取当前时间的函数
 import { getTime } from '@/utils/time';
-import { onMounted } from 'vue';
 const loginForm = ref({ username: '', password: '' });
 const registerForm = ref({
     username: '',

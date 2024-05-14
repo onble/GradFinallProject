@@ -1,7 +1,7 @@
 // 创建用户相关的小仓库
 import { defineStore } from 'pinia';
 // 引入接口
-import { userLogin } from '@/api/user';
+import { userLogin, user_info, user_logout } from '@/api/user';
 
 import type { UserState } from './types/type';
 // 引入操作本地存储的工具方法
@@ -25,7 +25,6 @@ const useUserStore = defineStore('User', {
         async userLogin(data) {
             // 用户登录的方法
             const result = await userLogin(data);
-            console.log('result = await userLogin(data);', result);
             // 登录请求：失败201->登录失败错误的信息
             if (result.code == 200) {
                 // pinia仓库存储一下token
@@ -42,30 +41,30 @@ const useUserStore = defineStore('User', {
         // 获取用户信息方法
         async userInfo() {
             // 获取用户信息进行存储仓库当中[用户头像，名字]
-            // const result: userInfoReponseData = await reqUserInfo();
+            const result = await user_info();
             // 如果获取用户信息成功，存储一下用户信息
-            // if (result.code == 200) {
-            //     this.username = result.data.name;
-            //     this.avatar = result.data.avatar;
-            //     return 'ok';
-            // } else {
-            //     return Promise.reject(new Error(result.message));
-            // }
-            return 'ok';
+            if (result.code == 200) {
+                this.username = result.data.user.account;
+                this.avatar =
+                    import.meta.env.VITE_APP_BASE_API + result.data.user.avatar;
+                return 'ok';
+            } else {
+                return Promise.reject(new Error(result.message));
+            }
         },
         // 退出登录
         async userLogout() {
             // 退出登录请求
-            // const result: any = await reqLogout();
-            // if (result.code == 200) {
-            //     this.token = '';
-            //     this.username = '';
-            //     this.avatar = '';
-            //     REMOVE_TOKEN();
-            // } else {
-            //     return Promise.reject(new Error(result.message));
-            // }
-            return 'temp';
+            console.log('开始退出');
+            const result = await user_logout();
+            if (result.code == 200) {
+                this.token = '';
+                this.username = '';
+                this.avatar = '';
+                REMOVE_TOKEN();
+            } else {
+                return Promise.reject(new Error(result.message));
+            }
         },
     },
     getters: {},
