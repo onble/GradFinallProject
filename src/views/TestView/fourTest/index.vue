@@ -57,14 +57,18 @@
 <script setup>
 import { ref } from 'vue';
 import CharacterCard from '@/components/CharacterCard.vue';
-import generateDatas from '@/utils/generateData';
+// import generateDatas from '@/utils/generateData';
 import { ElMessage } from 'element-plus';
+import { onMounted } from 'vue';
+import { getTest } from '@/api/Test/fourTest';
 const isDisabled = ref(true); // 控制按钮是否禁用
 const buttonType = ref('danger'); // 控制按钮的类型
 const done = ref(false);
-let data = generateDatas(20);
+// let data = generateDatas(20);
+// 从网络获取数据
+let data = undefined;
 let data_index = ref(0);
-const characters = ref(data[data_index.value]);
+const characters = ref();
 function clearInfo() {
     done.value = false;
     // 更改按钮的状态
@@ -75,15 +79,14 @@ function nextTest() {
     clearInfo();
     if (data_index.value < data.length - 1) {
         data_index.value = data_index.value + 1;
-        characters.value = data[data_index.value];
+        characters.value = data[data_index.value].tests;
     } else {
         ElMessage({
             type: 'warning',
             message: '开启新的一组题目',
         });
-        data = generateDatas(20);
+        generateData();
         data_index.value = 0;
-        characters.value = data[data_index.value];
     }
 }
 function chooseTrue() {
@@ -97,8 +100,21 @@ function chooseTrue() {
 function previousTest() {
     clearInfo();
     data_index.value = data_index.value - 1;
-    characters.value = data[data_index.value];
+    characters.value = data[data_index.value].tests;
 }
+async function generateData() {
+    const result = await getTest();
+    if (result.code == 200) {
+        data = result.data.test_list;
+        console.log('ada', data);
+    } else {
+        ElMessage({ type: 'error', message: '网络问题' });
+    }
+    characters.value = data[data_index.value].tests;
+}
+onMounted(() => {
+    generateData();
+});
 </script>
 
 <style lang="scss" scoped>
