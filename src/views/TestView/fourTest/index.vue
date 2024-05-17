@@ -51,31 +51,53 @@
                 </el-button>
             </el-col>
         </el-row>
+        <Timer class="timer" ref="timerRef"></Timer>
     </el-container>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import CharacterCard from '@/components/CharacterCard.vue';
+import CharacterCard from '@/views/TestView/fourTest/CharacterCard.vue';
 // import generateDatas from '@/utils/generateData';
 import { ElMessage } from 'element-plus';
 import { onMounted } from 'vue';
-import { getTest } from '@/api/Test/fourTest';
+import { getTest, saveRecords } from '@/api/Test/fourTest';
+import useFourTestStore from '@/store/modules/fourTest.ts';
+import { watch } from 'vue';
+// 引入计时器组件
+import Timer from '@/components/Timer.vue';
 const isDisabled = ref(true); // 控制按钮是否禁用
 const buttonType = ref('danger'); // 控制按钮的类型
 const done = ref(false);
 // let data = generateDatas(20);
 // 从网络获取数据
 let data = undefined;
+let fourTestStore = useFourTestStore();
 let data_index = ref(0);
-const characters = ref();
+const timerRef = ref(null);
+const characters = ref(null);
+watch(characters, () => {
+    fourTestStore.initData(data[data_index.value]);
+    //开启定时器
+    timerRef.value.startTimer();
+});
 function clearInfo() {
     done.value = false;
     // 更改按钮的状态
     buttonType.value = 'danger';
     isDisabled.value = true;
 }
+async function save_records(records) {
+    const result = await saveRecords(records);
+    if (result.code != 200) {
+        ElMessage({ type: 'error', message: result.message });
+    }
+}
 function nextTest() {
+    // 去发请求进行记录
+    const records = fourTestStore.test_record;
+    fourTestStore.resetTestRecord();
+    save_records(records);
     clearInfo();
     if (data_index.value < data.length - 1) {
         data_index.value = data_index.value + 1;
@@ -96,6 +118,10 @@ function chooseTrue() {
     // 更改按钮的状态
     buttonType.value = 'success';
     isDisabled.value = false;
+    // 停止定时器
+    timerRef.value.stopTimer();
+    // 存储消耗时间
+    fourTestStore.setAnswerSeconds(timerRef.value.getElapsedTime());
 }
 function previousTest() {
     clearInfo();
@@ -106,7 +132,6 @@ async function generateData() {
     const result = await getTest();
     if (result.code == 200) {
         data = result.data.test_list;
-        console.log('ada', data);
     } else {
         ElMessage({ type: 'error', message: '网络问题' });
     }
@@ -141,6 +166,22 @@ onMounted(() => {
             // border-bottom: 1px double rgba(52, 119, 164, 0.3);
             color: #212529;
         }
+    }
+    .timer {
+        position: absolute;
+        width: 180px;
+        height: 50px;
+        top: 10px;
+        right: 30px;
+        border: 1px solid #4caf50;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Arial', sans-serif;
+        color: #333;
     }
 }
 </style>
