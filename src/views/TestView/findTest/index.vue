@@ -48,6 +48,8 @@
 import { ref } from 'vue';
 import BlankCharacterCard from '@/views/TestView/ClassificationTest/BlankCharacterCard.vue';
 import CharacterCard from '@/views/TestView/findTest/CharacterCard.vue';
+import { getData } from '@/utils/generateData_findTest';
+import { onMounted } from 'vue';
 let done = ref(false);
 const buttonType = ref('danger'); // 控制按钮的类型
 // 控制能否下一题
@@ -120,6 +122,7 @@ function chooseTrue() {
 function nextTest() {
     // 下一题
     clearInfo();
+    classification_data.value = getData();
 }
 function clearInfo() {
     done.value = false;
@@ -127,6 +130,9 @@ function clearInfo() {
     buttonType.value = 'danger';
     isDisabled.value = true;
 }
+onMounted(() => {
+    classification_data.value = getData();
+});
 </script>
 
 <style lang="scss" scoped>

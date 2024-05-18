@@ -109,24 +109,25 @@ export const constantRoute = [
         ],
     },
     {
-        path: '/acl',
+        path: '/record',
         component: () => import('@/layout/index.vue'),
-        name: 'Acl',
+        name: 'Record',
         meta: {
             title: '训练记录',
             hidden: false,
             icon: 'Histogram',
         },
-        redirect: '/acl/user',
+        redirect: '/record/histroy',
         children: [
             {
-                path: '/acl/user',
-                component: () => import('@/views/acl/user/index.vue'),
+                path: '/record/histroy',
+                component: () =>
+                    import('@/views/trainRecords/history/index.vue'),
                 name: 'Acl',
                 meta: {
-                    title: '用户管理',
+                    title: '训练历史',
                     hidden: false,
-                    icon: 'User',
+                    icon: 'Postcard',
                 },
             },
             {

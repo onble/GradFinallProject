@@ -169,7 +169,7 @@ onMounted(() => {
     }
     .timer {
         position: absolute;
-        width: 180px;
+        width: 220px;
         height: 50px;
         top: 10px;
         right: 30px;
