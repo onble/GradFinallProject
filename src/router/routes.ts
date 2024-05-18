@@ -91,7 +91,7 @@ export const constantRoute = [
                     import('@/views/TestView/ClassificationTest/index.vue'),
                 name: 'ClassificationTest',
                 meta: {
-                    title: '分类测试',
+                    title: '辨别测试',
                     hidden: false,
                     icon: 'Operation',
                 },
