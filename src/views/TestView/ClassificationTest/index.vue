@@ -47,6 +47,7 @@
                 </el-button>
             </div>
         </main>
+        <Timer class="timer" ref="timerRef"></Timer>
     </div>
 </template>
 
@@ -62,6 +63,10 @@ import {
 } from '@/api/Test/classificationTest';
 import { onMounted } from 'vue';
 import { ElMessage } from 'element-plus';
+// 引入计时器组件
+import Timer from '@/components/Timer.vue';
+import { watch } from 'vue';
+const timerRef = ref(null);
 let classification_data = ref(getData());
 // 题组是否完成
 let done = ref(false);
@@ -147,6 +152,19 @@ let countAnswerRight = ref(0);
 // });
 // let data_index = ref(0);
 // const characters = ref(data[data_index.value]);
+watch(countAnswer, (count) => {
+    if (count == TestNumber) {
+        // 停止定时器
+        timerRef.value.stopTimer();
+        // 存储消耗时间
+        classification_data.value.answerSeconds =
+            timerRef.value.getElapsedTime();
+    }
+});
+watch(classification_data, () => {
+    //开启定时器
+    timerRef.value.startTimer();
+});
 function handleAnswer(item, reslut: boolean) {
     item.choose = reslut;
     if (reslut) {
@@ -279,5 +297,21 @@ main {
         transform: translate(-50%, -50%); // 精确居中定位
         z-index: 1000;
     }
+}
+.timer {
+    position: fixed;
+    width: 220px;
+    height: 50px;
+    top: calc($base-tabbar-height + 10px);
+    right: 30px;
+    border: 1px solid #4caf50;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Arial', sans-serif;
+    color: #333;
 }
 </style>
