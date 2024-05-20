@@ -58,7 +58,7 @@
 <script setup>
 import { ref } from 'vue';
 import CharacterCard from '@/views/TestView/fourTest/CharacterCard.vue';
-// import generateDatas from '@/utils/generateData';
+import generateDatas from '@/utils/generateData';
 import { ElMessage } from 'element-plus';
 import { onMounted } from 'vue';
 import { getTest, saveRecords } from '@/api/Test/fourTest';
@@ -134,6 +134,7 @@ async function generateData() {
         data = result.data.test_list;
     } else {
         ElMessage({ type: 'error', message: '网络问题' });
+        data = generateDatas(20);
     }
     characters.value = data[data_index.value].tests;
 }

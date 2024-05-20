@@ -49,7 +49,10 @@ const useUserStore = defineStore('User', {
                     import.meta.env.VITE_APP_BASE_API + result.data.user.avatar;
                 return 'ok';
             } else {
-                return Promise.reject(new Error(result.message));
+                this.username = 'error';
+                this.avatar = 'error';
+                return 'error';
+                // return Promise.reject(new Error(result.message));
             }
         },
         // 退出登录

@@ -37,5 +37,8 @@ export const userRegister = (data) =>
         API.user_register_URL +
             `?account=${data.username}&password=${data.password}&repassword=${data.repassword}&invitation_code=${data.invitation_code}`,
     );
-export const user_info = () => request.get(API.user_info_URL);
+export const user_info = () => {
+    const result = request.get(API.user_info_URL);
+    return result;
+};
 export const user_logout = () => request.post<any, any>(API.user_logout_URL);

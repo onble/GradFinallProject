@@ -27,8 +27,8 @@
             <section>
                 <div class="items">
                     <BlankCharacterCardWithAnswer
-                        @answer="handleAnswer"
                         v-for="(item, $index) in classification_data.tests"
+                        @answer="(answer) => handleAnswer(item, answer)"
                         :key="$index"
                         class="item"
                         :character="item"
@@ -56,6 +56,12 @@ import BlankCharacterCard from '@/views/TestView/ClassificationTest/BlankCharact
 import BlankCharacterCardWithAnswer from '@/views/TestView/ClassificationTest/BlankCharacterCardWithAnswer.vue';
 // const data = generateDatas(20);
 import getData from '@/utils/generateData_fourTest';
+import {
+    getClassificationTestData,
+    saveClassificationTestRecords,
+} from '@/api/Test/classificationTest';
+import { onMounted } from 'vue';
+import { ElMessage } from 'element-plus';
 let classification_data = ref(getData());
 // 题组是否完成
 let done = ref(false);
@@ -141,17 +147,44 @@ let countAnswerRight = ref(0);
 // });
 // let data_index = ref(0);
 // const characters = ref(data[data_index.value]);
-function handleAnswer(reslut: boolean) {
+function handleAnswer(item, reslut: boolean) {
+    item.choose = reslut;
     if (reslut) {
         countAnswerRight.value = countAnswerRight.value + 1;
     }
     countAnswer.value = countAnswer.value + 1;
 }
+async function getClassificationData() {
+    const reslut = await getClassificationTestData();
+    if (reslut.code == 200) {
+        classification_data.value = reslut.data.test;
+    } else {
+        ElMessage({ type: 'error', message: '网络错误,请检查服务器' });
+        classification_data.value = getData();
+    }
+}
+onMounted(() => {
+    getClassificationData();
+});
 // 获取下一组题目
-function nextTest() {
+async function nextTest() {
+    // 去发请求存储数据
+    try {
+        // 调用可能会返回被拒绝的 Promise 的函数
+        let reslut = await saveClassificationTestRecords(
+            classification_data.value,
+        );
+        if (reslut.code != 200) {
+            ElMessage({ type: 'error', message: '存储进度失败' });
+        }
+    } catch (error) {
+        // 处理被拒绝的 Promise
+        console.error('出现问题:', error);
+    }
+
     done.value = !done.value;
     // 更新数据
-    classification_data.value = getData();
+    getClassificationData();
     // 更新记录
     countAnswer.value = 0;
     countAnswerRight.value = 0;
