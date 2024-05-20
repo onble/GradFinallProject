@@ -6,10 +6,10 @@
                     <div class="testBox">
                         <h2 class="text-highlight">请找到目标人物</h2>
                     </div>
-                    <BlankCharacterCard :character="classification_data.target">
+                    <BlankCharacterCard :character="find_data.target">
                         <template v-slot:title>
                             <div class="title">
-                                {{ classification_data.target.name }}
+                                {{ find_data.target.name }}
                             </div>
                         </template>
                     </BlankCharacterCard>
@@ -31,16 +31,17 @@
             <div class="right">
                 <main>
                     <CharacterCard
-                        v-for="(character, index) in classification_data.tests"
+                        v-for="(character, index) in find_data.tests"
                         :key="index"
                         class="character-card"
                         :character="character"
-                        @chooseTrue="chooseTrue(character)"
+                        @choose="(answer) => choose(character, answer)"
                         :done="done"
                     />
                 </main>
             </div>
         </main>
+        <Timer class="timer" ref="timerRef"></Timer>
     </div>
 </template>
 
@@ -50,12 +51,18 @@ import BlankCharacterCard from '@/views/TestView/ClassificationTest/BlankCharact
 import CharacterCard from '@/views/TestView/findTest/CharacterCard.vue';
 import { getData } from '@/utils/generateData_findTest';
 import { onMounted } from 'vue';
+import { getFindTestData, saveFindTestRecords } from '@/api/Test/findTest';
+import { ElMessage } from 'element-plus';
+// 引入计时器组件
+import Timer from '@/components/Timer.vue';
+import { watch } from 'vue';
+const timerRef = ref(null);
 let done = ref(false);
 const buttonType = ref('danger'); // 控制按钮的类型
 // 控制能否下一题
 let isDisabled = ref(true);
 // 页面渲染数据
-let classification_data = ref({
+let find_data = ref({
     target: {
         id: 1,
         image: 'public/face/范冰冰/6.jpg',
@@ -112,17 +119,32 @@ let classification_data = ref({
         },
     ],
 });
-function chooseTrue() {
-    // 处理选中的逻辑
-    done.value = true;
-    // 更改按钮的状态
-    buttonType.value = 'success';
-    isDisabled.value = false;
+watch(find_data, () => {
+    //开启定时器
+    timerRef.value.startTimer();
+});
+function choose(character, answer) {
+    if (answer) {
+        // 处理选中的逻辑
+        done.value = true;
+        // 更改按钮的状态
+        buttonType.value = 'success';
+        isDisabled.value = false;
+        // 停止定时器
+        timerRef.value.stopTimer();
+        // 存储消耗时间
+        find_data.value.answerSeconds = timerRef.value.getElapsedTime();
+        character.choose = character.id;
+    } else {
+        character.choose = -character.id;
+    }
 }
 function nextTest() {
     // 下一题
     clearInfo();
-    classification_data.value = getData();
+    getFindData();
+    // 去保存数据
+    saveFindTestRecords(find_data.value);
 }
 function clearInfo() {
     done.value = false;
@@ -130,8 +152,17 @@ function clearInfo() {
     buttonType.value = 'danger';
     isDisabled.value = true;
 }
+async function getFindData() {
+    const reslut = await getFindTestData();
+    if (reslut.code == 200) {
+        find_data.value = reslut.data.test;
+    } else {
+        ElMessage({ type: 'error', message: '网络错误,请检查服务器' });
+        find_data.value = getData();
+    }
+}
 onMounted(() => {
-    classification_data.value = getData();
+    getFindData();
 });
 </script>
 
@@ -202,5 +233,21 @@ main {
             }
         }
     }
+}
+.timer {
+    position: fixed;
+    width: 220px;
+    height: 50px;
+    bottom: 130px;
+    left: calc($base-menu-width + 40px);
+    border: 1px solid #4caf50;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Arial', sans-serif;
+    color: #333;
 }
 </style>

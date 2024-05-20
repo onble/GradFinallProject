@@ -31,7 +31,7 @@ const props = defineProps({
     done: Boolean,
 });
 
-const $emit = defineEmits(['chooseTrue']);
+const $emit = defineEmits(['choose']);
 const isCorrect = ref('');
 const showDialog = ref(false);
 
@@ -47,9 +47,10 @@ function chooseAnswer() {
             type: 'success',
             message: '恭喜选出正确答案!  经验+1',
         });
-        $emit('chooseTrue');
+        $emit('choose', true);
     } else {
         isCorrect.value = 'wrong';
+        $emit('choose', false);
     }
 }
 function enlargedImage() {
