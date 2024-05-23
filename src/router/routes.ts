@@ -131,23 +131,36 @@ export const constantRoute = [
                 },
             },
             {
-                path: '/acl/role',
-                component: () => import('@/views/acl/role/index.vue'),
-                name: 'Role',
+                path: '/record/fourTest',
+                component: () =>
+                    import('@/views/trainRecords/fourTest/index.vue'),
+                name: 'RFourTest',
                 meta: {
-                    title: '角色管理',
+                    title: '基础测试',
                     hidden: false,
-                    icon: 'UserFilled',
+                    icon: 'Discount',
                 },
             },
             {
-                path: '/acl/permission',
-                component: () => import('@/views/acl/permission/index.vue'),
-                name: 'Permission',
+                path: '/record/classificationTest',
+                component: () =>
+                    import('@/views/trainRecords/ClassificationTest/index.vue'),
+                name: 'RClassificationTest',
                 meta: {
-                    title: '菜单管理',
+                    title: '辨别测试',
                     hidden: false,
-                    icon: 'Monitor',
+                    icon: 'Operation',
+                },
+            },
+            {
+                path: '/record/findTest',
+                component: () =>
+                    import('@/views/trainRecords/findTest/index.vue'),
+                name: 'RFindTest',
+                meta: {
+                    title: '搜寻测试',
+                    hidden: false,
+                    icon: 'ZoomIn',
                 },
             },
         ],
