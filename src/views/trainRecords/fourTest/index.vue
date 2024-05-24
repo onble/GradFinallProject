@@ -109,7 +109,6 @@ onMounted(() => {
 async function getDatas(pager = 1) {
     pageNo.value = pager;
     const result = await fourTestHistory(pageNo.value, pageSize.value);
-    console.log(result);
     if (result.code == 200) {
         total.value = result.data.total;
         inf_list.value = result.data.inf_list;

@@ -1,6 +1,6 @@
 <template>
     <div class="box" :class="[ChooseColor]">
-        <div class="content">{{ AbsNumber }}</div>
+        <div class="content">{{ people }}</div>
     </div>
 </template>
 
@@ -8,13 +8,11 @@
 import { computed } from 'vue';
 import { defineProps } from 'vue';
 const props = defineProps({
-    action: Number,
-});
-const AbsNumber = computed(() => {
-    return props.action > 0 ? props.action : -props.action;
+    true: Number,
+    people: String,
 });
 const ChooseColor = computed(() => {
-    return props.action > 0 ? 'green' : 'red';
+    return props.true > 0 ? 'green' : 'red';
 });
 </script>
 
