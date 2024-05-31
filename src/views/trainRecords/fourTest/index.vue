@@ -3,7 +3,7 @@
     <el-card style="margin: 10px 0px">
         <template #header>
             <div class="card-header">
-                <span>训练历史</span>
+                <span>基础测试训练历史</span>
             </div>
         </template>
         <div>

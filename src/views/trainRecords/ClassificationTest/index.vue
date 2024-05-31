@@ -3,7 +3,7 @@
     <el-card style="margin: 10px 0px">
         <template #header>
             <div class="card-header">
-                <span>训练历史</span>
+                <span>辨别测试训练历史</span>
             </div>
         </template>
         <div>
@@ -251,7 +251,6 @@ import { onMounted } from 'vue';
 import ImageBox from '@/views/trainRecords/ClassificationTest/imageBox.vue';
 import Circle from '@/views/trainRecords/ClassificationTest/circle.vue';
 import { classificationHistory } from '@/api/trainRecords/classification';
-import { computed } from 'vue';
 // 默认页码
 let pageNo = ref<number>(1);
 // 一页展示几条数据
@@ -265,7 +264,6 @@ onMounted(() => {
 async function getDatas(pager = 1) {
     pageNo.value = pager;
     const result = await classificationHistory(pageNo.value, pageSize.value);
-    console.log(result);
     if (result.code == 200) {
         total.value = result.data.total;
         inf_list.value = result.data.inf_list;
