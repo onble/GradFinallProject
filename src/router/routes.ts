@@ -55,16 +55,16 @@ export const constantRoute = [
             icon: 'DocumentDelete',
         },
     },
-    {
-        path: '/screen',
-        component: () => import('@/views/screen/index.vue'),
-        name: 'Screen',
-        meta: {
-            hidden: false,
-            title: '数据分析',
-            icon: 'Platform',
-        },
-    },
+    // {
+    //     path: '/screen',
+    //     component: () => import('@/views/screen/index.vue'),
+    //     name: 'Screen',
+    //     meta: {
+    //         hidden: false,
+    //         title: '数据分析',
+    //         icon: 'Platform',
+    //     },
+    // },
     {
         path: '/test',
         component: () => import('@/layout/index.vue'),
@@ -218,16 +218,16 @@ export const constantRoute = [
             },
         ],
     },
-    {
-        path: '/xunzhan',
-        component: () => import('@/views/modalWall/index.vue'),
-        name: 'XunZhang',
-        meta: {
-            hidden: false,
-            title: '勋章墙',
-            icon: 'GoldMedal',
-        },
-    },
+    // {
+    //     path: '/xunzhan',
+    //     component: () => import('@/views/modalWall/index.vue'),
+    //     name: 'XunZhang',
+    //     meta: {
+    //         hidden: false,
+    //         title: '勋章墙',
+    //         icon: 'GoldMedal',
+    //     },
+    // },
     {
         path: '/:pathMatch(.*)*',
         redirect: '/404',
